@@ -28,7 +28,18 @@ EM_FONT_SIZE = 72.0               # Manim font_size whose em is exactly 1 unit (
 KAPPA = 0.5522847498
 
 FAMILY = {'mono': 'JetBrains Mono', 'serif': 'Source Serif 4', 'sans': 'Inter'}
-CJK_FAMILY = 'Noto Sans CJK TC'
+_CJK = None
+
+
+def cjk_family():
+    """A CJK face Pango actually has (the warning line and the count cards): Noto first, else any CJK family."""
+    global _CJK
+    if _CJK is None:
+        import manimpango
+        have = set(manimpango.list_fonts())
+        _CJK = next((f for f in ('Noto Sans CJK TC', 'Noto Sans TC', 'Noto Sans CJK JP', 'Source Han Sans TC', 'WenQuanYi Zen Hei',
+                                 'Microsoft JhengHei', 'PingFang TC', 'IPAGothic') if f in have), 'Sans')
+    return _CJK
 WEIGHT = {100: 'THIN', 200: 'ULTRALIGHT', 300: 'LIGHT', 400: 'NORMAL', 500: 'MEDIUM', 600: 'SEMIBOLD',
           700: 'BOLD', 800: 'ULTRABOLD', 900: 'HEAVY'}
 
@@ -433,7 +444,7 @@ class Ctx:
 
     # ---- text --------------------------------------------------------------------------------------------
     def _shape(self, s, font, weight, italic):
-        fam = FAMILY.get(font, CJK_FAMILY if font.startswith(('tc', 'kr', 'meme')) else FAMILY['sans'])
+        fam = FAMILY.get(font, cjk_family() if font.startswith(('tc', 'kr', 'meme')) else FAMILY['sans'])
         key = (s, fam, weight, italic)
         sh = self._shapes.get(key)
         if sh is None:

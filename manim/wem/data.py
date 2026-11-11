@@ -243,7 +243,7 @@ def load_cues():
         src = open(path('src/scenes/cues.js'), encoding='utf-8').read()
     except OSError:
         return out
-    for m in re.finditer(r'^\s*([A-Za-z0-9_]+):\s*\[\s*(-?[0-9.]+)\s*,', src, re.M):
+    for m in re.finditer(r"(?<![\w'])([A-Za-z][A-Za-z0-9_]*):\s*\[\s*(-?[0-9.]+)\s*,\s*'", src):
         out[m.group(1)] = float(m.group(2))
     return out
 

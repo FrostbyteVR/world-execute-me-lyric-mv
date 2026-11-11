@@ -43,7 +43,8 @@ def marks(ctx, inset=24, length=24, color='mute', alpha=0.7, width=2):
 
 def ground(ctx, tone='panel', light=(960, 280, 420, 'raised', 1.0), dots=1.0, mk=True, seed=0):
     """The paper of a plate, full frame: tone, two flat steps of light, a dot screen, crop marks."""
-    ctx.rect(-200, -200, VW + 400, VH + 400, fill=True, color=tone)
+    m = 0 if getattr(ctx, 'no_bleed', False) else 200
+    ctx.rect(-m, -m, VW + 2 * m, VH + 2 * m, fill=True, color=tone)
     if light:
         x, y, rad, role, a = light
         ctx.circle(x, y, rad, fill=True, color=role, alpha=0.5 * a)
@@ -344,8 +345,6 @@ def plate_satisfaction(ctx, env, P):
         with ctx.at(*off):
             disc('text' if turned else 'me', sink * 0.4, sink * 0.4)
             # the crescent: a second step of the same ink along the lower right
-            ctx.circle(C[0] + sink * 0.4 + R * 0.14, C[1] + sink * 0.4 + R * 0.16, R * 0.86, fill=True, color='sub' if turned else 'meDim',
-                       rx=R * 0.86 * sx, alpha=0.0)
             cres = []
             for i in range(41):
                 an = -0.2 + i / 40 * (math.pi + 0.4)
