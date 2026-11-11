@@ -502,7 +502,7 @@ class Ctx:
         n = self._ti.get(key, 0)
         pool = self._tpool.setdefault(key, [])
         if n >= len(pool):
-            m = sh.proto.copy()
+            m = VMobject()                       # a plain group of glyph outlines (no deepcopy of the Text)
             m.submobjects = [VMobject() for _ in sh.pts]
             pool.append(m)
         m = pool[n]

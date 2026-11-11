@@ -81,7 +81,7 @@ def shots(env):
         groups = [(0, 2), (2, 3), (3, 5), (5, len(w))]
         times = [t_shout + k * P / 4 for k in range(4)]
         lit = sum(1 for tt in times if t >= tt)
-        ctx.image('f_eye', 0, -640, 1920, 1920, variant='ink', flip=True, alpha=0.08 + 0.06 * lit)
+        ctx.image('f_eye', 0, -548, 2103, 2103, variant='ink', flip=True, alpha=0.08 + 0.06 * lit)
         rows = [(a, 0), (b, 5)]
         for r, (s, off) in enumerate(rows):
             if not s:
@@ -95,9 +95,6 @@ def shots(env):
                 cw_ = ctx.measure(ch, size=size, weight=900, font='serif')
                 ctx.text(ch, x, y, size=size, weight=900, font='serif', color='meHot' if on else 'meDim', alpha=1 if on else 0.4)
                 x += cw_
-        if lit >= 4:
-            ctx.circle(1180, 470, 26, fill=True, color='text')
-            ctx.circle(1180, 470, 12, fill=True, color='bg')
 
     out = {}
     for n, sid in enumerate(('count-1-de', 'count-2-es', 'count-3-fr', 'count-4-ko', 'count-5-sv', 'count-6-zh')):

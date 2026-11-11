@@ -96,9 +96,9 @@ stacked.
   tears as shifted bands, the Vision mosaic as drawn blocks, and a static vignette finishes the frame.
 - **No clipping or masks.** Where the browser film shows a picture *through* letters (the last shout) or clips a
   scrolling thread, the port fades or layers instead.
-- **Simplified shots.** The section files are compact re-compositions of each shot's storyboard moment, timed on the
-  same beats and cues, not line-for-line translations of the JS drawing code; some fine detail (the ASCII world,
-  the cut-paper history strip, molecule diagrams, the fall through the windows) is drawn more simply.
+- **Re-composed shots.** Sections 6-14 follow the JS drawing code shot by shot (same events on the same beats and
+  cues); sections 1-5 and the execution / count cards are more compact re-compositions of each storyboard moment.
+  Some fine detail (the ASCII world, the cut-paper history strip) is drawn more simply.
 - Lyric text is dots until `data/lyrics.json` exists (the repository carries no lyrics).
 
 The credits and licences of the main project apply unchanged (see `../CREDITS.md`, `../LICENSE`): the character
