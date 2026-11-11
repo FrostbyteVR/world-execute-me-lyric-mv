@@ -189,6 +189,11 @@ The project was made and tested on Windows 11 only.
 `ffmpeg` comes from `ffmpeg-static` (if `node_modules/ffmpeg-static/ffmpeg.exe` is missing, run `node node_modules/ffmpeg-static/install.js` once).
 Python is needed only to re-analyse the audio and to check an exported file.
 
+### Manim port for a 960 × 320 display
+
+[`manim/`](manim/README.md) holds a port of the film to Manim, reframed for a 960 × 320 (3:1) landscape display. It
+reads the same data (config, timing, script, storyboard) and renders with `python manim/tools/render.py`.
+
 ### Prompts and how it was made
 
 The code of this film was written by AI (Claude, through Claude Code); the direction, the material and the review notes of
