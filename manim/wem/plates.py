@@ -41,15 +41,13 @@ def marks(ctx, inset=24, length=24, color='mute', alpha=0.7, width=2):
         ctx.line(x + sx * 6, y, x + sx * (6 + length), y, color=color, alpha=alpha, width=width)
 
 
-def ground(ctx, tone='panel', light=(960, 280, 420, 'raised', 1.0), dots=1.0, mk=True, seed=0):
-    """The paper of a plate, full frame: tone, two flat steps of light, a dot screen, crop marks."""
-    m = 0 if getattr(ctx, 'no_bleed', False) else 200
-    ctx.rect(-m, -m, VW + 2 * m, VH + 2 * m, fill=True, color=tone)
-    if light:
-        x, y, rad, role, a = light
-        ctx.circle(x, y, rad, fill=True, color=role, alpha=0.5 * a)
-        ctx.circle(x, y, rad * 0.62, fill=True, color=role, alpha=0.5 * a)
-    if dots > 0:
+_DOTS = None
+
+
+def _dot_screen():
+    """The dot screen of the paper (45 degrees, denser towards the foot), built once."""
+    global _DOTS
+    if _DOTS is None:
         quads = []
         j, y = 0, 12
         while y < VH:
@@ -60,7 +58,21 @@ def ground(ctx, tone='panel', light=(960, 280, 420, 'raised', 1.0), dots=1.0, mk
                 x += 24
             y += 24
             j += 1
-        ctx.path(np.concatenate(quads), color='line', alpha=0.45 * dots, fill=True)
+        _DOTS = np.concatenate(quads)
+    return _DOTS
+
+
+def ground(ctx, tone='panel', light=(960, 280, 420, 'raised', 1.0), dots=1.0, mk=True, seed=0):
+    """The paper of a plate, full frame: tone, two flat steps of light, a dot screen, crop marks."""
+    m = 0 if getattr(ctx, 'no_bleed', False) else 200
+    ctx.rect(-m, -m, VW + 2 * m, VH + 2 * m, fill=True, color=tone)
+    if light:
+        x, y, rad, role, a = light
+        ctx.circle(x, y, rad, fill=True, color=role, alpha=0.5 * a)
+        ctx.circle(x, y, rad * 0.62, fill=True, color=role, alpha=0.5 * a)
+    if dots > 0:
+        quads = _dot_screen()
+        ctx.path(quads, color='line', alpha=0.45 * dots, fill=True)
     if mk:
         marks(ctx)
 
